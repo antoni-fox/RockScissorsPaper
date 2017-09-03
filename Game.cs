@@ -7,9 +7,9 @@ namespace RockScissorsPaper
     {
         public enum Gestures
         {
-            Rock = 0,
-            Scissors = 1,
-            Paper = 2
+            Rock = 1,
+            Scissors = 2,
+            Paper = 3
         }
 
         private static readonly Random Random = new Random();

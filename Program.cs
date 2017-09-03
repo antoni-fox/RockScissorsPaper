@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Byte;
 
 namespace RockScissorsPaper
 {
@@ -30,7 +31,7 @@ namespace RockScissorsPaper
                 {
                     if (consoleKeyInfo != null)
                     {
-                        optionNumber = Byte.Parse(consoleKeyInfo);
+                        optionNumber = Parse(consoleKeyInfo);
                     }
                 }
                 catch (FormatException)
@@ -51,6 +52,7 @@ namespace RockScissorsPaper
                 switch ((GameOtions) optionNumber)
                 {
                     case GameOtions.GamerWithComputer:
+                        GameWithComputer();
                         break;
                     case GameOtions.TwoGamers:
                         break;
@@ -70,6 +72,42 @@ namespace RockScissorsPaper
 
         public static void GameWithComputer()
         {
+            Console.WriteLine("Выберите: 1. {0}; 2. {1}; 3. {2}",
+                Game.Gestures.Rock.ToString(),
+                Game.Gestures.Scissors.ToString(),
+                Game.Gestures.Paper.ToString());
+
+            var consoleKeyInfo = Console.ReadLine();
+            byte gestureNumber = 0;
+            try
+            {
+                if (consoleKeyInfo != null)
+                {
+                    gestureNumber = Parse(consoleKeyInfo);
+                }
+                else
+                {
+                    Console.WriteLine("Неверное значение");
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                if (!(e is FormatException) && !(e is OverflowException)) throw;
+                Console.WriteLine("Неверное значение");
+                return;
+            }
+
+            if (Enum.IsDefined(typeof(Game.Gestures), (int)gestureNumber))
+            {
+                var firstGesture = (Game.Gestures) gestureNumber;
+                var secondGesture = Game.RandGesture;
+                CheckGameWinner(firstGesture, secondGesture);
+                return;
+            }
+            
+            Console.WriteLine("Неверное значение");
+            
         }
 
         public static void GameWithTwoGamers()
